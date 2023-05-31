@@ -13,7 +13,7 @@ function comparePoints() {
       const players = {};
       rows.slice(1).forEach(row => { // Skip the header row
         const columns = row.split(',');
-        const name = columns[1];
+        const name = columns[1].replace(/"/g, ''); // Remove double quotes from player name
         const average = parseFloat(columns[18]); // Index 18 for PPG
         players[name] = average;
       });
