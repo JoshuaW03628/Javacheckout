@@ -37,3 +37,8 @@ function comparePoints(event) {
 // Add event listener to the compare button
 const compareBtn = document.getElementById('compare-btn');
 compareBtn.addEventListener('click', comparePoints);
+
+// Add event listener to ensure the DOM is loaded before adding the button event listener
+document.addEventListener('DOMContentLoaded', () => {
+  compareBtn.addEventListener('click', comparePoints);
+});
