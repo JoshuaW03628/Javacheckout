@@ -42,7 +42,48 @@ async function testPlayerProps() {
 }
 
 // Event listener for add button
-addButton.addEventListener('click', addPlayerPropsField);
+// Function to handle adding a new player props field
+function addPlayerPropsField() {
+  const playerPropsField = document.createElement('div');
+  playerPropsField.className = 'playerPropsField';
+
+  const playerKeyFormGroup = document.createElement('div');
+  playerKeyFormGroup.className = 'form-group';
+
+  const playerKeyLabel = document.createElement('label');
+  playerKeyLabel.textContent = 'Player Key:';
+  playerKeyLabel.setAttribute('for', 'playerKeyInput');
+
+  const playerKeyInput = document.createElement('input');
+  playerKeyInput.type = 'text';
+  playerKeyInput.id = 'playerKeyInput';
+  playerKeyInput.className = 'playerKeyInput';
+  playerKeyInput.placeholder = 'Enter player key';
+
+  playerKeyFormGroup.appendChild(playerKeyLabel);
+  playerKeyFormGroup.appendChild(playerKeyInput);
+
+  const categoryFormGroup = document.createElement('div');
+  categoryFormGroup.className = 'form-group';
+
+  const categoryLabel = document.createElement('label');
+  categoryLabel.textContent = 'Category of Statistic:';
+  categoryLabel.setAttribute('for', 'categoryInput');
+
+  const categoryInput = document.createElement('input');
+  categoryInput.type = 'text';
+  categoryInput.id = 'categoryInput';
+  categoryInput.className = 'categoryInput';
+  categoryInput.placeholder = 'Enter category of statistic';
+
+  categoryFormGroup.appendChild(categoryLabel);
+  categoryFormGroup.appendChild(categoryInput);
+
+  playerPropsField.appendChild(playerKeyFormGroup);
+  playerPropsField.appendChild(categoryFormGroup);
+
+  playerPropsFields.appendChild(playerPropsField);
+}
 
 // Event listener for test button
 testButton.addEventListener('click', testPlayerProps);
