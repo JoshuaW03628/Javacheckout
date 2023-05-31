@@ -1,5 +1,4 @@
 // Get references to HTML elements
-const playerForm = document.getElementById('playerForm');
 const addButton = document.getElementById('addButton');
 const testButton = document.getElementById('testButton');
 const resultDiv = document.getElementById('result');
@@ -41,9 +40,5 @@ function testPlayerProps() {
 // Event listener for add button
 addButton.addEventListener('click', addPlayerPropsField);
 
-// Event delegation for test button
-playerForm.addEventListener('click', function (event) {
-  if (event.target && event.target.id === 'testButton') {
-    testPlayerProps();
-  }
-});
+// Event listener for test button
+testButton.addEventListener('click', testPlayerProps);
