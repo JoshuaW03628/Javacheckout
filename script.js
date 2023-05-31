@@ -5,16 +5,16 @@ function comparePoints() {
   const testPoints = parseInt(document.getElementById('test-points').value);
 
   // Fetch the CSV file containing player data
-  fetch('/Users/josh/Javacheckout/player_data.csv')
+  fetch('player_data.csv')
     .then(response => response.text())
     .then(data => {
       // Parse the CSV data
       const rows = data.split('\n');
       const players = {};
-      rows.forEach(row => {
+      rows.slice(1).forEach(row => { // Skip the header row
         const columns = row.split(',');
-        const name = columns[0];
-        const average = parseFloat(columns[1]);
+        const name = columns[1];
+        const average = parseFloat(columns[18]); // Index 18 for PPG
         players[name] = average;
       });
 
