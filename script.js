@@ -5,7 +5,7 @@ function comparePoints() {
   const testPoints = parseInt(document.getElementById('test-points').value);
 
   // Fetch the CSV file containing player data
-  fetch('player_data.csv')
+  fetch('/Users/josh/Javacheckout/player_data.csv')
     .then(response => response.text())
     .then(data => {
       // Parse the CSV data
