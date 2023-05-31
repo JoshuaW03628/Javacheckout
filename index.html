@@ -1,41 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Player Props Testing</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>NBA Player Points Comparison</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <h1>Player Props Testing</h1>
-  <div id="playerForm">
-    <div id="playerPropsFields">
-      <div class="playerPropsField">
-        <div class="form-group">
-          <label for="firstName">First Name:</label>
-          <input type="text" class="firstName" placeholder="Enter first name">
-        </div>
-        <div class="form-group">
-          <label for="lastName">Last Name:</label>
-          <input type="text" class="lastName" placeholder="Enter last name">
-        </div>
-        <div class="form-group">
-          <label for="line">Line:</label>
-          <input type="number" class="line" step="0.5" placeholder="Enter line">
-        </div>
-        <div class="form-group">
-          <label for="category">Category:</label>
-          <select class="category">
-            <option value="points">Points</option>
-            <option value="rebounds">Rebounds</option>
-            <option value="assists">Assists</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <button id="addButton">Add Player Props</button>
-    <button id="testButton">Test</button>
-  </div>
-  <div id="result"></div>
+  <h1>NBA Player Points Comparison</h1>
+  
+  <div class="container">
+    <label for="player-average">Player's Average:</label>
+    <input type="number" id="player-average" required>
 
-  <script src="playerProps.js"></script>
+    <label for="test-points">Test Points:</label>
+    <input type="number" id="test-points" required>
+
+    <button id="compare-btn">Compare</button>
+
+    <p id="result"></p>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
