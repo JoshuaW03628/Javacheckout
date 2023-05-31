@@ -5,8 +5,6 @@ const resultDiv = document.getElementById('result');
 
 // Function to handle adding a new player props field
 function addPlayerPropsField() {
-  const playerForm = document.getElementById('playerForm');
-
   const playerPropsField = document.createElement('div');
   playerPropsField.classList.add('playerPropsField');
 
@@ -50,15 +48,7 @@ function addPlayerPropsField() {
   playerPropsField.appendChild(categoryLabel);
   playerPropsField.appendChild(categorySelect);
 
-  playerForm.insertBefore(playerPropsField, playerForm.lastElementChild);
-}
-
-// Function to simulate player performance
-function simulatePerformance(category) {
-  // ... code to simulate player performance based on category ...
-
-  // For demonstration purposes, generating a random performance value
-  return Math.random() * 10;
+  playerForm.insertBefore(playerPropsField, addButton);
 }
 
 // Function to test player props line
@@ -95,3 +85,17 @@ addButton.addEventListener('click', addPlayerPropsField);
 
 // Event listener for test button
 testButton.addEventListener('click', testPlayerProps);
+
+// Function to simulate player performance (dummy implementation)
+function simulatePerformance(category) {
+  switch (category) {
+    case 'points':
+      return Math.floor(Math.random() * 30);
+    case 'rebounds':
+      return Math.floor(Math.random() * 15);
+    case 'assists':
+      return Math.floor(Math.random() * 10);
+    default:
+      return 0;
+  }
+}
