@@ -6,12 +6,19 @@ function comparePoints(event) {
   const playerName = document.getElementById('player-name').value;
   const testPoints = parseInt(document.getElementById('test-points').value);
 
+  console.log('Player Name:', playerName);
+  console.log('Test Points:', testPoints);
+
   // Fetch the CSV file containing player data
   fetch('player_data.csv')
     .then(response => response.text())
     .then(data => {
+      console.log('CSV Data:', data);
+
       // Parse the CSV data
       const rows = data.split('\n');
+      console.log('CSV Rows:', rows);
+
       const players = {};
       rows.slice(1).forEach(row => { // Skip the header row
         const columns = row.split(',');
@@ -19,6 +26,8 @@ function comparePoints(event) {
         const average = parseFloat(columns[18]); // Index 18 for PPG
         players[name] = average;
       });
+
+      console.log('Players:', players);
 
       // Check if the player exists in the data
       if (players.hasOwnProperty(playerName)) {
