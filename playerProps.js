@@ -8,13 +8,30 @@ function addPlayerPropsField() {
   const playerPropsField = document.createElement('div');
   playerPropsField.classList.add('playerPropsField');
 
-  const playerNameLabel = document.createElement('label');
-  playerNameLabel.textContent = 'Player Name:';
-  const playerNameInput = document.createElement('input');
-  playerNameInput.type = 'text';
-  playerNameInput.classList.add('playerName');
-  playerNameInput.placeholder = 'Enter player name';
+  const firstNameGroup = document.createElement('div');
+  firstNameGroup.classList.add('form-group');
+  const firstNameLabel = document.createElement('label');
+  firstNameLabel.textContent = 'First Name:';
+  const firstNameInput = document.createElement('input');
+  firstNameInput.type = 'text';
+  firstNameInput.classList.add('firstName');
+  firstNameInput.placeholder = 'Enter first name';
+  firstNameGroup.appendChild(firstNameLabel);
+  firstNameGroup.appendChild(firstNameInput);
 
+  const lastNameGroup = document.createElement('div');
+  lastNameGroup.classList.add('form-group');
+  const lastNameLabel = document.createElement('label');
+  lastNameLabel.textContent = 'Last Name:';
+  const lastNameInput = document.createElement('input');
+  lastNameInput.type = 'text';
+  lastNameInput.classList.add('lastName');
+  lastNameInput.placeholder = 'Enter last name';
+  lastNameGroup.appendChild(lastNameLabel);
+  lastNameGroup.appendChild(lastNameInput);
+
+  const lineGroup = document.createElement('div');
+  lineGroup.classList.add('form-group');
   const lineLabel = document.createElement('label');
   lineLabel.textContent = 'Line:';
   const lineInput = document.createElement('input');
@@ -22,61 +39,88 @@ function addPlayerPropsField() {
   lineInput.step = '0.5';
   lineInput.classList.add('line');
   lineInput.placeholder = 'Enter line';
+  lineGroup.appendChild(lineLabel);
+  lineGroup.appendChild(lineInput);
 
+  const categoryGroup = document.createElement('div');
+  categoryGroup.classList.add('form-group');
   const categoryLabel = document.createElement('label');
   categoryLabel.textContent = 'Category:';
   const categorySelect = document.createElement('select');
   categorySelect.classList.add('category');
-  const optionPoints = document.createElement('option');
-  optionPoints.value = 'points';
-  optionPoints.textContent = 'Points';
-  const optionRebounds = document.createElement('option');
-  optionRebounds.value = 'rebounds';
-  optionRebounds.textContent = 'Rebounds';
-  const optionAssists = document.createElement('option');
-  optionAssists.value = 'assists';
-  optionAssists.textContent = 'Assists';
+  const pointsOption = document.createElement('option');
+  pointsOption.value = 'points';
+  pointsOption.textContent = 'Points';
+  const reboundsOption = document.createElement('option');
+  reboundsOption.value = 'rebounds';
+  reboundsOption.textContent = 'Rebounds';
+  const assistsOption = document.createElement('option');
+  assistsOption.value = 'assists';
+  assistsOption.textContent = 'Assists';
+  categorySelect.appendChild(pointsOption);
+  categorySelect.appendChild(reboundsOption);
+  categorySelect.appendChild(assistsOption);
+  categoryGroup.appendChild(categoryLabel);
+  categoryGroup.appendChild(categorySelect);
 
-  categorySelect.appendChild(optionPoints);
-  categorySelect.appendChild(optionRebounds);
-  categorySelect.appendChild(optionAssists);
+  playerPropsField.appendChild(firstNameGroup);
+  playerPropsField.appendChild(lastNameGroup);
+  playerPropsField.appendChild(lineGroup);
+  playerPropsField.appendChild(categoryGroup);
 
-  playerPropsField.appendChild(playerNameLabel);
-  playerPropsField.appendChild(playerNameInput);
-  playerPropsField.appendChild(lineLabel);
-  playerPropsField.appendChild(lineInput);
-  playerPropsField.appendChild(categoryLabel);
-  playerPropsField.appendChild(categorySelect);
-
-  playerForm.insertBefore(playerPropsField, addButton);
+  document.getElementById('playerForm').insertBefore(playerPropsField, testButton);
 }
 
-// Function to test player props line
-function testPlayerProps() {
+// Function to test player props lines
+async function testPlayerProps() {
   const playerPropsFields = document.getElementsByClassName('playerPropsField');
 
   // Clear result div
   resultDiv.innerHTML = '';
 
   // Iterate over each player props field
-  Array.from(playerPropsFields).forEach((field) => {
-    const playerName = field.querySelector('.playerName').value;
+  Array.from(playerPropsFields).forEach(async (field) => {
+    const firstName = field.querySelector('.firstName').value;
+    const lastName = field.querySelector('.lastName').value;
     const line = parseFloat(field.querySelector('.line').value);
     const category = field.querySelector('.category').value;
 
-    if (!playerName || isNaN(line) || !category) {
+    if (!firstName || !lastName || isNaN(line) || !category) {
       resultDiv.textContent = 'Please enter valid inputs.';
       return;
     }
 
-    // Simulate player performance
-    const performance = simulatePerformance(category);
+    try {
+      // Fetch player data from the API
+      const response = await fetch(`https://api.example.com/players?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`);
+      const data = await response.json();
 
-    const resultText = performance >= line ? 'exceeded the line!' : 'did not reach the line.';
-    const playerResult = `${playerName} ${resultText}`;
-    const playerResultElement = document.createElement('p');
-    playerResultElement.textContent = playerResult;
-    resultDiv.appendChild(playerResultElement);
+      if (response.ok && data.length > 0) {
+        const player = data[0]; // Assuming the API returns an array of players and we only need the first result
+
+        // Get the player's statistics for the specified category
+        const playerStats = player[category];
+
+        if (playerStats >= line) {
+          const resultText = 'exceeded the line!';
+          const playerResult = `${firstName} ${lastName} ${resultText}`;
+          const playerResultElement = document.createElement('p');
+          playerResultElement.textContent = playerResult;
+          resultDiv.appendChild(playerResultElement);
+        } else {
+          const resultText = 'did not reach the line.';
+          const playerResult = `${firstName} ${lastName} ${resultText}`;
+          const playerResultElement = document.createElement('p');
+          playerResultElement.textContent = playerResult;
+          resultDiv.appendChild(playerResultElement);
+        }
+      } else {
+        resultDiv.textContent = `Player '${firstName} ${lastName}' not found.`;
+      }
+    } catch (error) {
+      resultDiv.textContent = 'Error occurred while fetching player data.';
+      console.error(error);
+    }
   });
 }
 
@@ -86,16 +130,4 @@ addButton.addEventListener('click', addPlayerPropsField);
 // Event listener for test button
 testButton.addEventListener('click', testPlayerProps);
 
-// Function to simulate player performance (dummy implementation)
-function simulatePerformance(category) {
-  switch (category) {
-    case 'points':
-      return Math.floor(Math.random() * 30);
-    case 'rebounds':
-      return Math.floor(Math.random() * 15);
-    case 'assists':
-      return Math.floor(Math.random() * 10);
-    default:
-      return 0;
-  }
-}
+
