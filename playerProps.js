@@ -1,50 +1,56 @@
 // Get references to HTML elements
-const playerNameInput = document.getElementById('playerName');
-const lineInput = document.getElementById('line');
-const categorySelect = document.getElementById('category');
+const playerForm = document.getElementById('playerForm');
+const addButton = document.getElementById('addButton');
 const testButton = document.getElementById('testButton');
 const resultDiv = document.getElementById('result');
 
-// Define statistical categories and their respective weightings
-const categories = {
-  points: 1,
-  rebounds: 1.2,
-  assists: 1.5,
-};
+// Function to handle adding a new player props field
+function addPlayerPropsField() {
+  const playerPropsField = document.createElement('div');
+  playerPropsField.classList.add('playerPropsField');
 
-// Function to test player props line
-function testPlayerProps() {
-  const playerName = playerNameInput.value;
-  const line = parseFloat(lineInput.value);
-  const category = categorySelect.value;
+  const playerNameLabel = document.createElement('label');
+  playerNameLabel.textContent = 'Player Name:';
+  const playerNameInput = document.createElement('input');
+  playerNameInput.type = 'text';
+  playerNameInput.classList.add('playerName');
+  playerNameInput.placeholder = 'Enter player name';
 
-  if (!playerName || isNaN(line) || !category) {
-    resultDiv.textContent = 'Please enter valid inputs.';
-    return;
-  }
+  const lineLabel = document.createElement('label');
+  lineLabel.textContent = 'Line:';
+  const lineInput = document.createElement('input');
+  lineInput.type = 'number';
+  lineInput.step = '0.5';
+  lineInput.classList.add('line');
+  lineInput.placeholder = 'Enter line';
 
-  // Simulate player performance
-  const performance = simulatePerformance(category);
+  const categoryLabel = document.createElement('label');
+  categoryLabel.textContent = 'Category:';
+  const categorySelect = document.createElement('select');
+  categorySelect.classList.add('category');
+  const optionPoints = document.createElement('option');
+  optionPoints.value = 'points';
+  optionPoints.textContent = 'Points';
+  const optionRebounds = document.createElement('option');
+  optionRebounds.value = 'rebounds';
+  optionRebounds.textContent = 'Rebounds';
+  const optionAssists = document.createElement('option');
+  optionAssists.value = 'assists';
+  optionAssists.textContent = 'Assists';
 
-  if (performance >= line) {
-    resultDiv.textContent = `${playerName} exceeded the line!`;
-    resultDiv.classList.add('win');
-    resultDiv.classList.remove('loss');
-  } else {
-    resultDiv.textContent = `${playerName} did not reach the line.`;
-    resultDiv.classList.add('loss');
-    resultDiv.classList.remove('win');
-  }
+  categorySelect.appendChild(optionPoints);
+  categorySelect.appendChild(optionRebounds);
+  categorySelect.appendChild(optionAssists);
+
+  playerPropsField.appendChild(playerNameLabel);
+  playerPropsField.appendChild(playerNameInput);
+  playerPropsField.appendChild(lineLabel);
+  playerPropsField.appendChild(lineInput);
+  playerPropsField.appendChild(categoryLabel);
+  playerPropsField.appendChild(categorySelect);
+
+  playerForm.insertBefore(playerPropsField, addButton);
 }
 
-// Function to simulate player performance based on category
-function simulatePerformance(category) {
-  const maxPerformance = 30;
-  const weighting = categories[category];
-  const performance = Math.random() * maxPerformance;
-
-  return performance * weighting;
-}
-
-// Event listener for test button
-testButton.addEventListener('click', testPlayerProps);
+// Event listener for add button
+addButton.addEventListener('click', addPlayerPropsField);
