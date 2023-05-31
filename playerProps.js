@@ -1,89 +1,108 @@
-import { fetchCSVData, calculatePlayerAverage } from 'csvHandler.js';
-
 // Get references to HTML elements
 const addButton = document.getElementById('addButton');
 const testButton = document.getElementById('testButton');
 const resultDiv = document.getElementById('result');
 const playerPropsFields = document.getElementById('playerPropsFields');
-const nameInput = document.getElementById('nameInput');
 
 // Function to handle adding a new player props field
 function addPlayerPropsField() {
-  // ... (remaining code for adding a player props field)
+  const playerPropsField = document.createElement('div');
+  playerPropsField.classList.add('playerPropsField');
+
+  const firstNameGroup = document.createElement('div');
+  firstNameGroup.classList.add('form-group');
+  const firstNameLabel = document.createElement('label');
+  firstNameLabel.textContent = 'First Name:';
+  const firstNameInput = document.createElement('input');
+  firstNameInput.type = 'text';
+  firstNameInput.classList.add('firstName');
+  firstNameInput.placeholder = 'Enter first name';
+  firstNameGroup.appendChild(firstNameLabel);
+  firstNameGroup.appendChild(firstNameInput);
+
+  const lastNameGroup = document.createElement('div');
+  lastNameGroup.classList.add('form-group');
+  const lastNameLabel = document.createElement('label');
+  lastNameLabel.textContent = 'Last Name:';
+  const lastNameInput = document.createElement('input');
+  lastNameInput.type = 'text';
+  lastNameInput.classList.add('lastName');
+  lastNameInput.placeholder = 'Enter last name';
+  lastNameGroup.appendChild(lastNameLabel);
+  lastNameGroup.appendChild(lastNameInput);
+
+  const lineGroup = document.createElement('div');
+  lineGroup.classList.add('form-group');
+  const lineLabel = document.createElement('label');
+  lineLabel.textContent = 'Line:';
+  const lineInput = document.createElement('input');
+  lineInput.type = 'number';
+  lineInput.step = '0.5';
+  lineInput.classList.add('line');
+  lineInput.placeholder = 'Enter line';
+  lineGroup.appendChild(lineLabel);
+  lineGroup.appendChild(lineInput);
+
+  const categoryGroup = document.createElement('div');
+  categoryGroup.classList.add('form-group');
+  const categoryLabel = document.createElement('label');
+  categoryLabel.textContent = 'Category:';
+  const categorySelect = document.createElement('select');
+  categorySelect.classList.add('category');
+  const pointsOption = document.createElement('option');
+  pointsOption.value = 'points';
+  pointsOption.textContent = 'Points';
+  const reboundsOption = document.createElement('option');
+  reboundsOption.value = 'rebounds';
+  reboundsOption.textContent = 'Rebounds';
+  const assistsOption = document.createElement('option');
+  assistsOption.value = 'assists';
+  assistsOption.textContent = 'Assists';
+  categorySelect.appendChild(pointsOption);
+  categorySelect.appendChild(reboundsOption);
+  categorySelect.appendChild(assistsOption);
+  categoryGroup.appendChild(categoryLabel);
+  categoryGroup.appendChild(categorySelect);
+
+  playerPropsField.appendChild(firstNameGroup);
+  playerPropsField.appendChild(lastNameGroup);
+  playerPropsField.appendChild(lineGroup);
+  playerPropsField.appendChild(categoryGroup);
+
+  playerPropsFields.appendChild(playerPropsField);
 }
 
 // Function to test player props lines
 async function testPlayerProps() {
+  const playerPropsFields = document.getElementsByClassName('playerPropsField');
+
   // Clear result div
   resultDiv.innerHTML = '';
 
-  // Fetch the CSV data
-  const csvData = await fetchCSVData('nba_player_statistics.csv');
+  // Iterate over each player props field
+  Array.from(playerPropsFields).forEach(async (field) => {
+    const firstName = field.querySelector('.firstName').value;
+    const lastName = field.querySelector('.lastName').value;
+    const line = parseFloat(field.querySelector('.line').value);
+    const category = field.querySelector('.category').value;
 
-  // Get the name input
-  const playerName = nameInput.value.trim();
+    if (!firstName || !lastName || isNaN(line) || !category) {
+      resultDiv.textContent = 'Please enter valid inputs.';
+      return;
+    }
 
-  if (!playerName) {
-    resultDiv.textContent = 'Please enter a valid player name.';
-    return;
-  }
+    // Perform your logic to check if the player hits the line using the API or any other method
 
-  // Perform your logic to check if the player hits the line using the CSV data or any other method
-  const playerResult = calculatePlayerAverage(csvData, playerName);
-  if (playerResult) {
-    // Player hits the line
+    // Display the result
+    const playerResult = `${firstName} ${lastName} hits the line!`;
     const playerResultElement = document.createElement('p');
     playerResultElement.textContent = playerResult;
     resultDiv.appendChild(playerResultElement);
-  } else {
-    // Player doesn't hit the line
-    // You can customize the message or take any other action here
-  }
+  });
 }
 
 // Event listener for add button
-// Function to handle adding a new player props field
-function addPlayerPropsField() {
-  const playerPropsField = document.createElement('div');
-  playerPropsField.className = 'playerPropsField';
-
-  const playerKeyFormGroup = document.createElement('div');
-  playerKeyFormGroup.className = 'form-group';
-
-  const playerKeyLabel = document.createElement('label');
-  playerKeyLabel.textContent = 'Player Key:';
-  playerKeyLabel.setAttribute('for', 'playerKeyInput');
-
-  const playerKeyInput = document.createElement('input');
-  playerKeyInput.type = 'text';
-  playerKeyInput.id = 'playerKeyInput';
-  playerKeyInput.className = 'playerKeyInput';
-  playerKeyInput.placeholder = 'Enter player key';
-
-  playerKeyFormGroup.appendChild(playerKeyLabel);
-  playerKeyFormGroup.appendChild(playerKeyInput);
-
-  const categoryFormGroup = document.createElement('div');
-  categoryFormGroup.className = 'form-group';
-
-  const categoryLabel = document.createElement('label');
-  categoryLabel.textContent = 'Category of Statistic:';
-  categoryLabel.setAttribute('for', 'categoryInput');
-
-  const categoryInput = document.createElement('input');
-  categoryInput.type = 'text';
-  categoryInput.id = 'categoryInput';
-  categoryInput.className = 'categoryInput';
-  categoryInput.placeholder = 'Enter category of statistic';
-
-  categoryFormGroup.appendChild(categoryLabel);
-  categoryFormGroup.appendChild(categoryInput);
-
-  playerPropsField.appendChild(playerKeyFormGroup);
-  playerPropsField.appendChild(categoryFormGroup);
-
-  playerPropsFields.appendChild(playerPropsField);
-}
+addButton.addEventListener('click', addPlayerPropsField);
 
 // Event listener for test button
 testButton.addEventListener('click', testPlayerProps);
