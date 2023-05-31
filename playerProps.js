@@ -2,6 +2,7 @@
 const addButton = document.getElementById('addButton');
 const testButton = document.getElementById('testButton');
 const resultDiv = document.getElementById('result');
+const playerPropsFields = document.getElementById('playerPropsFields');
 
 // Function to handle adding a new player props field
 function addPlayerPropsField() {
@@ -68,7 +69,7 @@ function addPlayerPropsField() {
   playerPropsField.appendChild(lineGroup);
   playerPropsField.appendChild(categoryGroup);
 
-  document.getElementById('playerForm').insertBefore(playerPropsField, testButton);
+  playerPropsFields.appendChild(playerPropsField);
 }
 
 // Function to test player props lines
@@ -90,37 +91,13 @@ async function testPlayerProps() {
       return;
     }
 
-    try {
-      // Fetch player data from the API
-      const response = await fetch(`https://api.example.com/players?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`);
-      const data = await response.json();
+    // Perform your logic to check if the player hits the line using the API or any other method
 
-      if (response.ok && data.length > 0) {
-        const player = data[0]; // Assuming the API returns an array of players and we only need the first result
-
-        // Get the player's statistics for the specified category
-        const playerStats = player[category];
-
-        if (playerStats >= line) {
-          const resultText = 'exceeded the line!';
-          const playerResult = `${firstName} ${lastName} ${resultText}`;
-          const playerResultElement = document.createElement('p');
-          playerResultElement.textContent = playerResult;
-          resultDiv.appendChild(playerResultElement);
-        } else {
-          const resultText = 'did not reach the line.';
-          const playerResult = `${firstName} ${lastName} ${resultText}`;
-          const playerResultElement = document.createElement('p');
-          playerResultElement.textContent = playerResult;
-          resultDiv.appendChild(playerResultElement);
-        }
-      } else {
-        resultDiv.textContent = `Player '${firstName} ${lastName}' not found.`;
-      }
-    } catch (error) {
-      resultDiv.textContent = 'Error occurred while fetching player data.';
-      console.error(error);
-    }
+    // Display the result
+    const playerResult = `${firstName} ${lastName} hits the line!`;
+    const playerResultElement = document.createElement('p');
+    playerResultElement.textContent = playerResult;
+    resultDiv.appendChild(playerResultElement);
   });
 }
 
@@ -129,5 +106,3 @@ addButton.addEventListener('click', addPlayerPropsField);
 
 // Event listener for test button
 testButton.addEventListener('click', testPlayerProps);
-
-
