@@ -18,7 +18,7 @@ async function testPlayerProps() {
   resultDiv.innerHTML = '';
 
   // Fetch the CSV data
-  const csvData = await fetchCSVData('/Users/josh/Javacheckout/nba_player_statistics.csv');
+  const csvData = await fetchCSVData('nbaplayerstatistics.csv');
 
   // Get the name input
   const playerName = nameInput.value.trim();
