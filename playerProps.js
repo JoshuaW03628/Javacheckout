@@ -91,7 +91,7 @@ async function testPlayerProps() {
       return;
     }
 
-    // Perform your logic to check if the player hits the line using the API or any other method
+    // Perform your logic to check if the player hits the line using the CSV data or any other method
 
     // Display the result
     const playerResult = `${firstName} ${lastName} hits the line!`;
