@@ -1,34 +1,50 @@
 // Get references to HTML elements
-const teamSelect = document.getElementById('teamSelect');
-const betAmountInput = document.getElementById('betAmount');
-const placeBetButton = document.getElementById('placeBetButton');
+const playerNameInput = document.getElementById('playerName');
+const lineInput = document.getElementById('line');
+const categorySelect = document.getElementById('category');
+const testButton = document.getElementById('testButton');
 const resultDiv = document.getElementById('result');
 
-// Function to handle the bet placement
-function placeBet() {
-  const selectedTeam = teamSelect.value;
-  const betAmount = parseFloat(betAmountInput.value);
+// Define statistical categories and their respective weightings
+const categories = {
+  points: 1,
+  rebounds: 1.2,
+  assists: 1.5,
+};
 
-  if (isNaN(betAmount) || betAmount <= 0) {
-    resultDiv.textContent = 'Please enter a valid bet amount.';
+// Function to test player props line
+function testPlayerProps() {
+  const playerName = playerNameInput.value;
+  const line = parseFloat(lineInput.value);
+  const category = categorySelect.value;
+
+  if (!playerName || isNaN(line) || !category) {
+    resultDiv.textContent = 'Please enter valid inputs.';
     return;
   }
 
-  const winningTeam = Math.random() < 0.5 ? 'team1' : 'team2';
+  // Simulate player performance
+  const performance = simulatePerformance(category);
 
-  if (selectedTeam === winningTeam) {
-    const winnings = calculateWinnings(betAmount);
-    resultDiv.textContent = `Congratulations! You won $${winnings.toFixed(2)}!`;
+  if (performance >= line) {
+    resultDiv.textContent = `${playerName} exceeded the line!`;
+    resultDiv.classList.add('win');
+    resultDiv.classList.remove('loss');
   } else {
-    resultDiv.textContent = `Sorry, you lost your bet of $${betAmount.toFixed(2)}.`;
+    resultDiv.textContent = `${playerName} did not reach the line.`;
+    resultDiv.classList.add('loss');
+    resultDiv.classList.remove('win');
   }
 }
 
-// Function to calculate winnings
-function calculateWinnings(betAmount) {
-  const odds = 2; // Example: 2x payout for winning
-  return betAmount * odds;
+// Function to simulate player performance based on category
+function simulatePerformance(category) {
+  const maxPerformance = 30;
+  const weighting = categories[category];
+  const performance = Math.random() * maxPerformance;
+
+  return performance * weighting;
 }
 
-// Event listener for place bet button
-placeBetButton.addEventListener('click', placeBet);
+// Event listener for test button
+testButton.addEventListener('click', testPlayerProps);
