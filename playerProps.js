@@ -6,51 +6,39 @@ const resultDiv = document.getElementById('result');
 
 // Function to handle adding a new player props field
 function addPlayerPropsField() {
-  const playerPropsField = document.createElement('div');
-  playerPropsField.classList.add('playerPropsField');
+  // ... code for adding a new player props field ...
 
-  const playerNameLabel = document.createElement('label');
-  playerNameLabel.textContent = 'Player Name:';
-  const playerNameInput = document.createElement('input');
-  playerNameInput.type = 'text';
-  playerNameInput.classList.add('playerName');
-  playerNameInput.placeholder = 'Enter player name';
+  // Update event listener for test button
+  testButton.removeEventListener('click', testPlayerProps);
+  testButton.addEventListener('click', testPlayerProps);
+}
 
-  const lineLabel = document.createElement('label');
-  lineLabel.textContent = 'Line:';
-  const lineInput = document.createElement('input');
-  lineInput.type = 'number';
-  lineInput.step = '0.5';
-  lineInput.classList.add('line');
-  lineInput.placeholder = 'Enter line';
+// Function to test player props line
+function testPlayerProps() {
+  const playerPropsFields = document.getElementsByClassName('playerPropsField');
 
-  const categoryLabel = document.createElement('label');
-  categoryLabel.textContent = 'Category:';
-  const categorySelect = document.createElement('select');
-  categorySelect.classList.add('category');
-  const optionPoints = document.createElement('option');
-  optionPoints.value = 'points';
-  optionPoints.textContent = 'Points';
-  const optionRebounds = document.createElement('option');
-  optionRebounds.value = 'rebounds';
-  optionRebounds.textContent = 'Rebounds';
-  const optionAssists = document.createElement('option');
-  optionAssists.value = 'assists';
-  optionAssists.textContent = 'Assists';
+  // Iterate over each player props field
+  Array.from(playerPropsFields).forEach((field) => {
+    const playerName = field.querySelector('.playerName').value;
+    const line = parseFloat(field.querySelector('.line').value);
+    const category = field.querySelector('.category').value;
 
-  categorySelect.appendChild(optionPoints);
-  categorySelect.appendChild(optionRebounds);
-  categorySelect.appendChild(optionAssists);
+    if (!playerName || isNaN(line) || !category) {
+      resultDiv.textContent = 'Please enter valid inputs.';
+      return;
+    }
 
-  playerPropsField.appendChild(playerNameLabel);
-  playerPropsField.appendChild(playerNameInput);
-  playerPropsField.appendChild(lineLabel);
-  playerPropsField.appendChild(lineInput);
-  playerPropsField.appendChild(categoryLabel);
-  playerPropsField.appendChild(categorySelect);
+    // Simulate player performance
+    const performance = simulatePerformance(category);
 
-  playerForm.insertBefore(playerPropsField, addButton);
+    const resultText = performance >= line ? 'exceeded the line!' : 'did not reach the line.';
+    const playerResult = `${playerName} ${resultText}`;
+    resultDiv.innerHTML += `<p>${playerResult}</p>`;
+  });
 }
 
 // Event listener for add button
 addButton.addEventListener('click', addPlayerPropsField);
+
+// Event listener for test button
+testButton.addEventListener('click', testPlayerProps);
