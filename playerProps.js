@@ -1,4 +1,4 @@
-import { fetchCSVData, calculatePlayerAverage } from './csvHandler.js';
+import { fetchCSVData, calculatePlayerAverage } from 'csvHandler.js';
 
 // Get references to HTML elements
 const addButton = document.getElementById('addButton');
@@ -18,7 +18,7 @@ async function testPlayerProps() {
   resultDiv.innerHTML = '';
 
   // Fetch the CSV data
-  const csvData = await fetchCSVData('/Users/josh/Javacheckout/_archive/nba_player_statistics.csv');
+  const csvData = await fetchCSVData('nba_player_statistics.csv');
 
   // Get the name input
   const playerName = nameInput.value.trim();
