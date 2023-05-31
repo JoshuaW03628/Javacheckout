@@ -1,5 +1,7 @@
 // Function to compare player's points to the stored average
-function comparePoints() {
+function comparePoints(event) {
+  event.preventDefault(); // Prevent form submission
+
   // Get the player name and test points from the form
   const playerName = document.getElementById('player-name').value;
   const testPoints = parseInt(document.getElementById('test-points').value);
@@ -32,9 +34,6 @@ function comparePoints() {
     });
 }
 
-// Add event listener to the form
-const form = document.getElementById('comparison-form');
-form.addEventListener('submit', function(event) {
-  event.preventDefault(); // Prevent form submission
-  comparePoints();
-});
+// Add event listener to the compare button
+const compareBtn = document.getElementById('compare-btn');
+compareBtn.addEventListener('click', comparePoints);
