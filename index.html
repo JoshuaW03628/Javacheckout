@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>NBA Player Points Comparison</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <div class="container">
@@ -24,9 +24,22 @@
     </form>
 
     <p id="result"></p>
+
+    <!-- Add the button for functions.html -->
+    <button id="go-to-functions-btn">Functions Page</button>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="script.js"></script>
+  <script>
+    // Function to handle the button click event
+    function goToFunctionsPage() {
+      // Redirect to the functions.html page
+      window.location.href = "functions.html";
+    }
+
+    // Add event listener to the "Functions Page" button
+    const goToFunctionsBtn = document.getElementById("go-to-functions-btn");
+    goToFunctionsBtn.addEventListener("click", goToFunctionsPage);
+  </script>
 </body>
 </html>
