@@ -10,15 +10,22 @@ function comparePoints(event) {
   fetch('player_data.csv')
     .then(response => response.text())
     .then(data => {
+      console.log('CSV Data:', data);
+
       // Parse the CSV data
       const rows = data.split('\n');
+      console.log('CSV Rows:', rows);
+
       const players = {};
       rows.slice(1).forEach(row => { // Skip the header row
         const columns = row.split(',');
+        console.log('Columns:', columns);
         const name = columns[1].replace(/"/g, ''); // Remove double quotes from player name
         const average = parseFloat(columns[17]); // Index 17 for PPG
         players[name] = average;
       });
+
+      console.log('Players:', players);
 
       // Check if the player exists in the data
       if (players.hasOwnProperty(playerName)) {
