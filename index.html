@@ -26,20 +26,15 @@
     <p id="result"></p>
 
     <!-- Add the button for functions.html -->
-    <button id="go-to-functions-btn">Functions Page</button>
+    <button onclick="goToFunctionsPage()">Functions Page</button>
   </div>
 
   <script src="script.js"></script>
   <script>
-    // Function to handle the button click event
+    // Function to navigate to the functions.html page
     function goToFunctionsPage() {
-      // Redirect to the functions.html page
       window.location.href = "functions.html";
     }
-
-    // Add event listener to the "Functions Page" button
-    const goToFunctionsBtn = document.getElementById("go-to-functions-btn");
-    goToFunctionsBtn.addEventListener("click", goToFunctionsPage);
   </script>
 </body>
 </html>
