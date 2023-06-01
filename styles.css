@@ -75,11 +75,11 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
-    text-align:center
+    margin: auto
   }
   
   .contain {
-    width: 500px;
+    width: 650px;
     margin: 50px auto;
     background-color: #333333;
     padding: 20px;
