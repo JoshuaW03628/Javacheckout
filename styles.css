@@ -75,7 +75,9 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin: auto
+    position: fixed;
+    left: 50%;
+    top: 75%
   }
   
   .contain {
