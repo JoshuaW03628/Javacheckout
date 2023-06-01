@@ -12,6 +12,8 @@ function comparePoints(event) {
     .then(data => {
       // Use PapaParse to parse the CSV data
       const parsedData = Papa.parse(data, { header: true });
+      console.log(parsedData.data); // Log the parsed CSV data
+
       const players = {};
 
       // Iterate through each row of the parsed CSV data
@@ -20,6 +22,8 @@ function comparePoints(event) {
         const average = parseFloat(row.PPG);
         players[name] = average;
       });
+
+      console.log(players); // Log the players object
 
       // Check if the player exists in the data
       if (players.hasOwnProperty(playerName)) {
