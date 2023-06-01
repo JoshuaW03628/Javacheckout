@@ -29,7 +29,7 @@ function comparePoints(event) {
       if (players.hasOwnProperty(playerName)) {
         const playerAverage = players[playerName];
         const result = testPoints > playerAverage ? 'above' : 'below';
-        document.getElementById('result').textContent = `The test points for ${playerName} are ${result} the average (${playerAverage}).`;
+        document.getElementById('result').textContent = `The test points for ${playerName} are ${result} their seasonal average of (${playerAverage}) the odds for this bet aren't in your favor.`;
       } else {
         document.getElementById('result').textContent = `Player '${playerName}' not found in the data.`;
       }
