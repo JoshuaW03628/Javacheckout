@@ -76,8 +76,8 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
     position: fixed;
-    left: 50%;
-    top: 90%
+    left: 10%;
+    top: 75%
   }
   
   .contain {
