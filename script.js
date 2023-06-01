@@ -28,8 +28,8 @@ function comparePoints(event) {
       // Check if the player exists in the data
       if (players.hasOwnProperty(playerName)) {
         const playerAverage = players[playerName];
-        const result = testPoints > playerAverage ? 'above' : 'below';
-        document.getElementById('result').textContent = `The test points for ${playerName} are ${result} their seasonal average of (${playerAverage}), the odds for this bet aren't in your favor.`;
+        const result = testPoints > playerAverage ? 'over' : 'under';
+        document.getElementById('result').textContent = `The test points for ${playerName} are ${result} their seasonal average of (${playerAverage}), therefore you should take the ${result} on this line.`;
       } else {
         document.getElementById('result').textContent = `Player '${playerName}' not found in the data.`;
       }
