@@ -76,7 +76,7 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
     position: fixed;
-    left: 50%;
+    left: 20%;
     top: 75%
   }
   
