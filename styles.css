@@ -64,4 +64,16 @@ body {
     text-align: center;
     color: #ffffff;
   }
-  
+
+  #function-btn {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align:center
+  }
