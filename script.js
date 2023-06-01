@@ -10,22 +10,16 @@ function comparePoints(event) {
   fetch('player_data.csv')
     .then(response => response.text())
     .then(data => {
-      console.log('CSV Data:', data);
-
-      // Parse the CSV data
-      const rows = data.split('\n');
-      console.log('CSV Rows:', rows);
-
+      // Use PapaParse to parse the CSV data
+      const parsedData = Papa.parse(data, { header: true });
       const players = {};
-      rows.slice(1).forEach(row => { // Skip the header row
-        const columns = row.split(',');
-        console.log('Columns:', columns);
-        const name = columns[1].replace(/"/g, ''); // Remove double quotes from player name
-        const average = parseFloat(columns[17]); // Index 17 for PPG
+
+      // Iterate through each row of the parsed CSV data
+      parsedData.data.forEach(row => {
+        const name = row.NAME;
+        const average = parseFloat(row.PPG);
         players[name] = average;
       });
-
-      console.log('Players:', players);
 
       // Check if the player exists in the data
       if (players.hasOwnProperty(playerName)) {
